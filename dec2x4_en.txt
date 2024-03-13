@@ -1,0 +1,55 @@
+//Design Code
+module dec2x4(output reg [3:0]out,input en,input [1:0]in);
+  always@*
+    begin
+      if(en==1'b1)
+        begin
+          if(in==2'b00)
+            begin
+              out=4'b0001;
+            end
+          else if(in==2'b01)
+            begin
+              out=4'b0010;
+            end
+          else if(in==2'b10)
+            begin
+              out=4'b0100;
+            end
+          else if(in==2'b11)
+            begin
+              out=4'b1000;
+            end
+          else
+            begin
+              out=4'b0000;
+            end
+        end
+      else
+        begin
+          out=4'b0000;
+        end
+    end
+endmodule
+
+//Test Bench Code
+module test();
+  wire [3:0]out;
+  reg en;
+  reg [1:0]in;
+  dec2x4 DUT(out,en,in);
+  initial
+    begin
+      integer i;
+      for(i=0;i<8;i=i+1)
+        begin
+          {en,in}=i;
+          #10;
+        end
+    end
+  initial
+    begin
+        $monitor("en=%b,in=%b,out=%b",en,in,out);
+    end
+endmodule
+
